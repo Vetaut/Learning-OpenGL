@@ -115,7 +115,6 @@ int main() {
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
         glUseProgram(shaderProgram2);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, (void *)(sizeof(float) * 3));
-
         
         // check and call all events and swap the buffers
         glfwSwapBuffers(window);
