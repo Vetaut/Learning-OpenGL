@@ -30,6 +30,7 @@
 		8D51F18C2292642B00BB304F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		8D6010CA2291F1D80067AEA7 /* Window */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Window; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D6010CD2291F1D80067AEA7 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		8D7379602303C0900042813A /* shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
 		8D7D306B22925FF90087929B /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../usr/local/Cellar/glfw/3.3/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,6 +69,7 @@
 			children = (
 				8D6010CD2291F1D80067AEA7 /* main.cpp */,
 				8D51F18A229263BA00BB304F /* glad.c */,
+				8D7379602303C0900042813A /* shader.h */,
 			);
 			path = Window;
 			sourceTree = "<group>";
