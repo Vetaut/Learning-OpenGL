@@ -26,6 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8D455CB12304A9CE002E6733 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		8D51F18A229263BA00BB304F /* glad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glad.c; sourceTree = "<group>"; };
 		8D51F18C2292642B00BB304F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		8D6010CA2291F1D80067AEA7 /* Window */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Window; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +68,7 @@
 		8D6010CC2291F1D80067AEA7 /* Window */ = {
 			isa = PBXGroup;
 			children = (
+				8D455CB12304A9CE002E6733 /* stb_image.h */,
 				8D6010CD2291F1D80067AEA7 /* main.cpp */,
 				8D51F18A229263BA00BB304F /* glad.c */,
 				8D7379602303C0900042813A /* shader.h */,
