@@ -19,11 +19,9 @@
 #include "shader.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow *window);
-unsigned int setupShaderProgram(const char *vertexSource, const char *fragmentSource);
-unsigned int setupVertexShader(const char *shaderSource);
-unsigned int setupFragmentShader(const char *shaderSource);
-void checkSetupShaderSuccess(unsigned int shader, std::string classifer);
+void processInput(GLFWwindow* window);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 //Settings
 const unsigned int SCR_WIDTH = 800;
@@ -59,6 +57,21 @@ const char *fragmentShaderSource3 = "#version 330 core\n"
 "}\n\0";
  */
 
+glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
+
+float lastX = 800.0f / 2.0f;
+float lastY = 600.0f / 2.0f;
+float yaw = -90.0f;
+float pitch = 0.0f;
+float fov = 45.0f;
+
+bool firstMouse = true;
+
 int main() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -87,7 +100,13 @@ int main() {
     // Tell OpenGL if the user resized the window
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
+    
     glEnable(GL_DEPTH_TEST);
+
+    
     
     // build and compile our shader program
     // ------------------------------------
@@ -225,6 +244,10 @@ int main() {
         // Input
         processInput(window);
         
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+        
         // Set background color
         // clear the colorbuffer
         glClearColor(0.5f, 0.3f, 0.3f, 1.0f);
@@ -240,14 +263,15 @@ int main() {
         ourShader.use();
         ourShader.setFloat("mixture", 0.2f);
         
-        //glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 view = glm::mat4(1.0f);
+        glm::mat4 view;
+        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+        
         glm::mat4 projection = glm::mat4(1.0f);
         
         //model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, 0.0f));
         
-        projection = glm::perspective(glm::radians(45.0f), ((float)SCR_WIDTH / (float)SCR_HEIGHT), 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(fov), ((float)SCR_WIDTH / (float)SCR_HEIGHT), 0.1f, 100.0f);
         
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
@@ -280,6 +304,8 @@ int main() {
 
 // Deals with all input from user
 void processInput(GLFWwindow *window) {
+    float cameraSpeed = 2.5f * deltaTime; // adjust accordingly
+    
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if(glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
@@ -288,9 +314,59 @@ void processInput(GLFWwindow *window) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     if(glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
         glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        cameraPos += cameraSpeed * cameraFront;
+    if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        cameraPos -= cameraSpeed * cameraFront;
+    if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    
 }
 
 // Changes the viewport size if window size changes
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
+}
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+    if(firstMouse) {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+    
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos;
+    lastX = xpos;
+    lastY = ypos;
+    
+    float sensitivity = 0.1f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+    
+    yaw   += xoffset;
+    pitch += yoffset;
+    
+    if(pitch > 89.0f)
+        pitch = 89.0f;
+    if(pitch < -89.0f)
+        pitch = -89.0f;
+    
+    glm::vec3 front;
+    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    front.y = sin(glm::radians(pitch));
+    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    cameraFront = glm::normalize(front);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+    if(fov >= 1.0f && fov <= 45.0f)
+        fov -= yoffset;
+    if(fov <= 1.0f)
+        fov = 1.0f;
+    if (fov >= 45.0f) {
+        fov = 45.0f;
+    }
 }
