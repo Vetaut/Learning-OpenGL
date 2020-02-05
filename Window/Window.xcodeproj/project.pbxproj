@@ -11,6 +11,7 @@
 		8D51F18D2292642B00BB304F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D51F18C2292642B00BB304F /* OpenGL.framework */; };
 		8D6010CE2291F1D80067AEA7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8D6010CD2291F1D80067AEA7 /* main.cpp */; };
 		8D7D306C22925FF90087929B /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D7D306B22925FF90087929B /* libglfw.3.3.dylib */; };
+		8DA3752B23EA59CD00522AA3 /* libassimpd.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DA3752A23EA59CD00522AA3 /* libassimpd.3.1.1.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,10 @@
 		8D6010CD2291F1D80067AEA7 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		8D7379602303C0900042813A /* shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
 		8D7D306B22925FF90087929B /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../usr/local/Cellar/glfw/3.3/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
+		8DA3752723EA477D00522AA3 /* libassimpd.3.1.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimpd.3.1.1.dylib; path = "../../../assimp-3.1.1/lib/Debug/libassimpd.3.1.1.dylib"; sourceTree = "<group>"; };
+		8DA3752923EA486D00522AA3 /* mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
+		8DA3752A23EA59CD00522AA3 /* libassimpd.3.1.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimpd.3.1.1.dylib; path = "../../../assimp-3.1.1/build/code/Debug/libassimpd.3.1.1.dylib"; sourceTree = "<group>"; };
+		8DF6626D23EA646000C15A6A /* model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = model.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +48,7 @@
 			files = (
 				8D51F18D2292642B00BB304F /* OpenGL.framework in Frameworks */,
 				8D7D306C22925FF90087929B /* libglfw.3.3.dylib in Frameworks */,
+				8DA3752B23EA59CD00522AA3 /* libassimpd.3.1.1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				8D6010CD2291F1D80067AEA7 /* main.cpp */,
+				8DA3752923EA486D00522AA3 /* mesh.h */,
+				8DF6626D23EA646000C15A6A /* model.h */,
 				8D7379602303C0900042813A /* shader.h */,
 				8D146051232F413400B860B1 /* camera.h */,
 				8D455CB12304A9CE002E6733 /* stb_image.h */,
@@ -81,6 +89,8 @@
 		8D6010D42291F2790067AEA7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8DA3752723EA477D00522AA3 /* libassimpd.3.1.1.dylib */,
+				8DA3752A23EA59CD00522AA3 /* libassimpd.3.1.1.dylib */,
 				8D51F18C2292642B00BB304F /* OpenGL.framework */,
 				8D7D306B22925FF90087929B /* libglfw.3.3.dylib */,
 			);
@@ -266,10 +276,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					"/Users/williamgoniprow/Documents/assimp-3.1.1/include/",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/glfw/3.3/lib,
+					"/Users/williamgoniprow/Documents/assimp-3.1.1/build/code/Debug",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -279,10 +293,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					"/Users/williamgoniprow/Documents/assimp-3.1.1/include/",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/glfw/3.3/lib,
+					"/Users/williamgoniprow/Documents/assimp-3.1.1/build/code/Debug",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
